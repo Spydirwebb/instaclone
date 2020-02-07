@@ -1,11 +1,11 @@
 // src/components/Header/index.js
 
 //imports
-import React from 'react';
+import React, {Component} from 'react';
 import "./Header.css";
 
 //Site Header
-class Header extends React.Component {
+class Header extends Component {
   render (){
     return (
       <nav className="Nav">
