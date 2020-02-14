@@ -4,20 +4,25 @@ import React, { Component } from "react";
 import "./Posts.css";
 import gql from "graphql-tag";
 import Post from "../Post";
+import Notifier from "../Notifier";
 
 class Posts extends Component {
   constructor() {
     super();
     this.state = {
       posts: []
-    }
+    };
+    this.offline = !navigator.onLine;
   }
   componentDidMount() {
     //request permission
     Notification.requestPermission();
 
     //fetch initial Posts
-    this.props.apollo_client.query({query: gql `
+    if( !navigator.onLine){
+      this.setState({ posts: JSON.parse(localStorage.getItem("posts")) });
+    } else {
+      this.props.apollo_client.query({query: gql `
           {
             posts(user_id: "a"){
               id
@@ -31,7 +36,9 @@ class Posts extends Component {
           }
         `}).then(response => {
       this.setState({posts: response.data.posts});
-    });
+      localStorage.setItem('posts', JSON.stringify(response.data.posts))
+      });
+    }
 
   //subscribe to posts channel
   this.posts_channel = this.props.pusher.subscribe('posts-channel');
@@ -61,20 +68,26 @@ class Posts extends Component {
   }, this);
 }
   render() {
+    const notify = this.offline? <Notifier data="Instaclone: Offline" /> : <span/>;
     return (
-      <div className="Posts">
-        {this.state.posts
-          .map(post => (
-            <Post
-              nickname={post.user.nickname}
-              avatar={post.user.avatar}
-              image={post.image}
-              caption={post.caption}
-              key={post.id}
-            />
-          ))}
-      </div>);
-  };
+      <div>
+        {notify}
+        <div className="Posts">
+          {this.state.posts
+            .map(post => (
+              <Post
+                nickname={post.user.nickname}
+                avatar={post.user.avatar}
+                image={post.image}
+                caption={post.caption}
+                key={post.id}
+                />
+              ))
+            }
+        </div>
+      </div>
+    );
+  }
 }
 //export
 export default Posts;
