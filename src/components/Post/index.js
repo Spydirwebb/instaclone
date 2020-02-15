@@ -31,6 +31,12 @@ class Post extends Component {
           <img alt={caption} src={image}/>
         </div>
       </div>
+      <div className="Post-buttons">
+        <a className="heart" src='/' alt="Like"/>
+        <a className="comment" src="/" alt="Comment"/>
+        <a className="dm" src="/" alt="Direct Message" />
+        <a className="save" src="/" alt="save" />
+      </div>
       <div className="Post-caption">
         <strong>{nickname}</strong> {caption}
       </div>

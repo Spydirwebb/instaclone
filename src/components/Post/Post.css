@@ -34,7 +34,31 @@
   width: 100%;
   max-height: 900px;
 }
-
+.Post-buttons{
+  display: flex;
+  height: 30px;
+  padding-left: 10px;
+  padding-top:5px;
+  align-items: left;
+}
+.Post-buttons a{
+  height: 25px;
+  width: 25px;
+  background-image: url(../sprite2.png);
+  background-size: 405px 380px;
+}
+.heart{
+  background-position:-126px -329px;
+}
+.comment{
+  background-position:-258px -175px;
+}
+.dm{
+  background-position: -351px -353px;
+}
+.save{
+  background-position: -150px -354px;
+}
 .Post-caption{
   padding: 16px 45px;
   text-align: left;
