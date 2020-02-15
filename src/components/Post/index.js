@@ -34,7 +34,7 @@ class Post extends Component {
       <div className="Post-caption">
         <strong>{nickname}</strong> {caption}
       </div>
-    </article>);
+      </article>);
   }
 };
 
